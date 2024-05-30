@@ -251,7 +251,7 @@ int main() {
                 cout << "5. 주문서 출력하기" << endl;
                 cout << "6. 주문 건 수 확인하기" << endl;
                 cout << "7. 남은 주문 건 수 확인하기" << endl;
-                cout << "Q. 종료하기" << endl;
+                cout << "Q. 종료하기 (Q/q)" << endl;
                 cout << endl;
                 cout << "실행할 메뉴 번호를 입력해주세요 : ";
                 cin >> choice;
@@ -311,7 +311,7 @@ int main() {
                 }
                 case 'q': case 'Q': {
                     orderList.write_Orderlist_file("orders.txt"); // 주문 정보 파일에 저장
-                    cout << "주문시스템을 종료합니다." << endl << endl;
+                    cout << "+++주문 정보 업데이트 완료+++" << endl << endl;
                     loop = false;
                     break;
                 }
