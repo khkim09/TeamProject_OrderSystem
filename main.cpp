@@ -84,12 +84,15 @@ int main() {
         cout << "-------3.주문 화면--------" << endl;
         cout << "-----4.프로그램 종료------" << endl;
 
+        cout << endl << "실행할 작업 번호를 입력해주세요 : ";
         cin >> job;
+        cin.ignore();
+        cout << endl;
 
         if (job == 1) {
             loop = true;
 
-            int order;
+            char choice;
             string name, line;
 
             while (loop) {
@@ -98,42 +101,44 @@ int main() {
                 cout << "------메뉴 삭제 = 2-------" << endl;
                 cout << "----메뉴 요소 변경 = 3----" << endl;
                 cout << "-----메뉴판 열기 = 4------" << endl;
-                cout << "-메뉴판 저장 및 종료 = 5--" << endl;
-
-                cout << "--------명령 입력---------" << endl;
-
-                cin >> order;
+                cout << "----메뉴판 종료 = Q/q-----" << endl;
+                cout << endl;
+                cout << "실행할 메뉴 번호를 입력해주세요 : ";
+                cin >> choice;
                 cin.ignore();
                 cout << endl;
 
-                switch (order) {
-                case 1: {
+                switch (choice) {
+                case '1': {
                     menulist.addMenu(addMenuFromInput());
-                    cout << endl;
+                    cout << endl << "메뉴가 추가되었습니다!" << endl;
+                    menulist.saveToFile("Menu_List.txt");
                     break;
                 }
-                case 2: {
+                case '2': {
                     cout << "--------메뉴 이름 입력---------" << endl;
                     getline(cin, name);
 
                     menulist.removeMenu(name);
-                    cout << endl;
+                    cout << endl << "'" << name << "'" << " 메뉴를 삭제했습니다!" << endl;
+                    menulist.saveToFile("Menu_List.txt");
                     break;
                 }
-                case 3: {
+                case '3': {
                     cout << "--------메뉴 이름 입력---------" << endl;
                     getline(cin, name);
 
                     menulist.changeMenu(name);
-                    cout << endl;
+                    cout << endl << "'" << name << "'" << " 메뉴를 수정했습니다!" << endl;
+                    menulist.saveToFile("Menu_List.txt");
                     break;
                 }
-                case 4: {
+                case '4': {
                     menulist.showList();
                     cout << endl;
                     break;
                 }
-                case 5: {
+                case 'q': case 'Q': {
                     menulist.saveToFile("Menu_List.txt");
                     cout << endl;
                     loop = false;
@@ -156,11 +161,13 @@ int main() {
                 cout << "실행할 메뉴 번호를 입력해주세요 : ";
                 cin >> choice;
                 cin.ignore(); // enter 키 날리기
+                cout << endl;
 
                 switch (choice) {
                 case '1': {
                     Customer customer = createCustomerFromInput();
                     customerList.addCustomer(customer);
+                    customerList.saveToFile("Customers.txt");
                     break;
                 }
                 case '2': {
@@ -172,6 +179,7 @@ int main() {
                     else
                         cout << "해당 주문자 정보를 찾을 수 없습니다." << endl;
                     cout << endl;
+                    customerList.saveToFile("Customers.txt");
                     break;
                 }
                 case '3': {
@@ -189,6 +197,7 @@ int main() {
                     else
                         cout << "해당 주문자 정보가 없거나 수정할 정보 입력이 잘못되었습니다." << endl;
                     cout << endl;
+                    customerList.saveToFile("Customers.txt");
                     break;
                 }
                 case '4': {
@@ -201,7 +210,7 @@ int main() {
                     break;
                 }
                 case '5': {
-                    customerList.printAllCustomers();
+                    customerList.printAllCustomers("Customers.txt");
                     cout << endl;
                     break;
                 }
@@ -216,6 +225,7 @@ int main() {
                         cout << "모든 주문자 정보가 삭제되었습니다." << endl;
                     }
                     cout << endl;
+                    customerList.saveToFile("Customers.txt");
                     break;
                 }
                 case 'q': case 'Q': {
@@ -232,7 +242,7 @@ int main() {
         }
         else if (job == 3) {
             loop = true;
-            int choice;
+            char choice;
 
             while (loop) {
                 cout << endl;
@@ -243,64 +253,73 @@ int main() {
                 cout << "5. 주문서 출력하기" << endl;
                 cout << "6. 주문 건 수 확인하기" << endl;
                 cout << "7. 남은 주문 건 수 확인하기" << endl;
-                cout << "8. 종료하기" << endl;
+                cout << "Q. 종료하기" << endl;
                 cout << endl;
                 cout << "실행할 메뉴 번호를 입력해주세요 : ";
                 cin >> choice;
                 cin.ignore();
+                cout << endl;
 
                 switch (choice) {
-                case 1: {
+                case '1': {
                     orderList.new_order(menulist, customerList);
                     cout << endl;
                     break;
                 }
-                case 2: {
-                    cout << "주문번호를 입력해주세요.";
+                case '2': {
+                    cout << "주문번호를 입력해주세요 : ";
                     int orderN;
                     cin >> orderN;
                     orderList.change_order(orderN, menulist);
+                    orderList.write_Orderlist_file("orders.txt");
+                    cout << endl;
                     break;
                 }
-                case 3: {
-                    cout << "주문번호를 입력해주세요.";
+                case '3': {
+                    cout << "주문번호를 입력해주세요 : ";
                     int orderN;
                     cin >> orderN;
                     orderList.delete_order(orderN);
+                    orderList.write_Orderlist_file("orders.txt");
+                    cout << endl;
                     break;
                 }
-                case 4: {
-                    cout << "주문번호를 입력해주세요.";
+                case '4': {
+                    cout << "주문번호를 입력해주세요 : ";
                     int orderN;
                     cin >> orderN;
                     orderList.complete_order(orderN);
+                    orderList.write_Orderlist_file("orders.txt");
+                    cout << endl;
                     break;
                 }
-                case 5: {
-                    cout << "주문번호를 입력해주세요.";
+                case '5': {
+                    cout << "주문번호를 입력해주세요 : ";
                     int orderN;
                     cin >> orderN;
                     orderList.print_order(orderN);
+                    cout << endl;
                     break;
                 }
-                case 6: {
+                case '6': {
                     orderList.show_order_count();
+                    cout << endl;
                     break;
                 }
-                case 7: {
+                case '7': {
                     orderList.show_remaining_order();
+                    cout << endl;
                     break;
                 }
-                case 8: {
+                case 'q': case 'Q': {
                     orderList.write_Orderlist_file("orders.txt"); // 주문 정보 파일에 저장
-                    cout << "주문시스템을 종료합니다." << endl;
+                    cout << "주문시스템을 종료합니다." << endl << endl;
                     loop = false;
                     break;
                 }
                 default:
-                    cout << "잘못된 번호입니다. 다시 입력해주세요" << endl;
+                    cout << "잘못된 명령 선택입니다." << endl << endl;
                 }
-                cout << endl;
             }
         }
         else if (job == 4) {

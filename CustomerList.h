@@ -14,6 +14,6 @@ public:
 	bool deleteCustomer(string& phoneNum); // 주문자 정보 삭제
 	bool updateCustomer(string& phoneNum, int field, string& newValue); // 주문자 정보 업데이트
 	bool printCustomerInfo(string& phoneNum);
-	void printAllCustomers();
+	void printAllCustomers(const string& filename);
 	void clearAllCustomers();
 };

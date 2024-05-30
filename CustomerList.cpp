@@ -117,16 +117,23 @@ bool CustomerList::printCustomerInfo(string& phoneNum) {
     return false;
 }
 
-void CustomerList::printAllCustomers() {
-    cout << "---------주문자 정보----------" << endl;
-    for (auto& customer : customers) {
-        cout << "성함 : " << customer.getName() << endl;
-        cout << "생년월일 : " << customer.getBirth() << endl;
-        cout << "전화번호 : " << customer.getPhoneNum() << endl; // 05.30 modified
-        cout << "주소 : " << customer.getAddress() << endl;
-        cout << "요청사항 : " << customer.getRequest() << endl;
-        cout << "결제수단 : " << customer.getPaymentMethod() << endl;
-        cout << "------------------------------" << endl;
+void CustomerList::printAllCustomers(const string& filename) {
+    ifstream inFile(filename);
+
+    if (inFile.peek() == ifstream::traits_type::eof()) {
+        cout << "Error : 등록된 정보가 없습니다." << endl;
+    }
+    else {
+        cout << "---------주문자 정보----------" << endl;
+        for (auto& customer : customers) {
+            cout << "성함 : " << customer.getName() << endl;
+            cout << "생년월일 : " << customer.getBirth() << endl;
+            cout << "전화번호 : " << customer.getPhoneNum() << endl; // 05.30 modified
+            cout << "주소 : " << customer.getAddress() << endl;
+            cout << "요청사항 : " << customer.getRequest() << endl;
+            cout << "결제수단 : " << customer.getPaymentMethod() << endl;
+            cout << "------------------------------" << endl;
+        }
     }
 }
 
