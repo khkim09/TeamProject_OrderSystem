@@ -244,4 +244,3 @@ void OrderList::show_order_count() {
 void OrderList::show_remaining_order() {
     cout << "남은 주문 수: " << remainingOrderCount << "건" << endl;
 }
-
