@@ -266,7 +266,7 @@ int main() {
 
                 switch (choice) {
                 case '1': { // 주문 시작하기. 새로운 주문 추가
-                    if (orderList.new_order(menulist, customerList)) {
+                    if (orderList.new_order(menulist, customerList)) { // true 받으면
                         Customer customer = createCustomerFromInput(); // 고객정보 추가
                         customerList.addCustomer(customer);
                         customerList.saveToFile("Customers.txt");

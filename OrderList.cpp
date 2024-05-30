@@ -84,24 +84,24 @@ void OrderList::write_Orderlist_file(const string& filename) {
     file << totalOrderCount << " " << completeOrderCount << " " << remainingOrderCount << endl;
 
     for (auto& order : Orders) {
-        //주문번호, 총액, 결제금액, 완료 여부, 회원 여부 쓰기
+        // 주문번호, 총액, 결제금액, 완료 여부, 회원 여부 쓰기
         file << order.get_order_number() << " "
             << order.get_total() << " "
             << order.get_receipt_total() << " "
             << order.isComplete() << " "
             << order.isMember() << endl;
 
-        //주문 시간, 완료 시간 쓰기
+        // 주문 시간, 완료 시간 쓰기
         order.get_order_time().saveToFile(file);
         order.get_complete_time().saveToFile(file);
 
-        //주문 항목 쓰기. 메뉴 이름은 따옴표 추가
+        // 주문 항목 쓰기. 메뉴 이름은 따옴표 추가
         for (auto& item : order.getItems()) {
             file << "\"" << item.getName() << "\" " // 수동으로 따옴표 추가
                 << item.getCount() << " "
                 << item.getPrice() << endl;
         }
-        //주문서 마지막에 메시지 추가
+        // 주문서 마지막에 메시지 추가
         file << "END_OF_ORDER" << endl;
     }
     file.close();
@@ -110,14 +110,14 @@ void OrderList::write_Orderlist_file(const string& filename) {
 
 // 새로운 주문 추가
 bool OrderList::new_order(MenuList& menulist, CustomerList& customerlist) {
-    //새 주문서
+    // 새 주문서
     Order newOrder(totalOrderCount + 1);
 
     int choice;
     bool answer = false;
 
     while (true) {
-        //회원여부 확인
+        // 회원여부 확인
         cout << "회원이십니까?" << endl;
         cout << "1. 예" << endl;
         cout << "2. 아니오" << endl;
@@ -126,7 +126,7 @@ bool OrderList::new_order(MenuList& menulist, CustomerList& customerlist) {
         cin.ignore();
         cout << endl;
 
-        if (choice == 1) {//회원이라면 전화번호로 회원 조회
+        if (choice == 1) {// 회원이라면 전화번호로 회원 조회
             cout << "회원 조회를 위해 전화번호를 입력해주십시오 (010-XXXX-XXXX) : ";
             string phone_number;
 
@@ -135,26 +135,27 @@ bool OrderList::new_order(MenuList& menulist, CustomerList& customerlist) {
             for (auto& customer : customerlist.customers) {
                 cout << phone_number << " 조회중.." << endl << endl;
                 if (customer.getPhoneNum() == phone_number) {
-                    newOrder.setMember(true); //확인 되면 회원 여부 true로 변경
+                    newOrder.setMember(true); // 확인 되면 회원 여부 true로 변경
                     cout << "'" << customer.getName() << "'님 확인되었습니다!" << endl;
                     break;
                 }
             }
 
-            if (!newOrder.isMember()) { //조회 안되면 메시지 출력
+            if (!newOrder.isMember()) { // 조회 안되면 메시지 출력
                 cout << "회원 정보가 존재하지 않습니다." << endl;
             }
             break;
         }
-        else if (choice == 2) { // 회원 정보 등록 과정 //기현님파트
+        // 주문 먼저 끝낸 후 회원 정보 등록 화면으로 이동
+        else if (choice == 2) {
             char ans;
             cout << "회원 등록을 진행하시겠습니까? (y/n) : ";
-            cin >> ans; // 등록 여부 (ans)
+            cin >> ans; // 등록 의사 (ans)
             cin.ignore();
             cout << endl;
 
-            if (ans == 'y') {
-                answer = true; // main으로 반환할 bool값 (answer)
+            if (ans == 'y') { // 등록 의사 == 'y' : bool값 true반환
+                answer = true; // main으로 반환할 bool값 저장(answer)
                 cout << "주문을 종료하시면 회원 등록 화면으로 넘어갑니다." << endl;
             }
             break;
@@ -164,10 +165,10 @@ bool OrderList::new_order(MenuList& menulist, CustomerList& customerlist) {
         }
     }
 
-    //주문 항목 업데이트
+    // 주문 항목 업데이트
     newOrder.Change_ordermenu(menulist);
 
-    if (newOrder.is_order_items_empty()) {//주문 항목이 비어있으면 메시지 출력
+    if (newOrder.is_order_items_empty()) {// 주문 항목이 비어있으면 메시지 출력
         cout << "주문 항목이 비어 있으므로 주문이 추가되지 않습니다." << endl;
         return false;
     }
