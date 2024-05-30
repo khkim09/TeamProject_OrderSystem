@@ -35,7 +35,7 @@ void Order::Change_ordermenu(MenuList& menulist) {
             cin.ignore();
 
             switch (order) {
-            case 1: { //메뉴 추가
+            case 1: { // 메뉴 추가
                 string name;
                 int count;
 
@@ -44,12 +44,12 @@ void Order::Change_ordermenu(MenuList& menulist) {
                 cout << endl << "추가할 수량을 입력해주세요 : ";
                 cin >> count;
                 cin.ignore();
-                //메뉴 이름과 수량을 입력받아서 추가
+                // 메뉴 이름과 수량을 입력받아서 추가
                 Add_ordermenu(name, count, menulist);
                 break;
             }
-            case 2: {//메뉴 삭제
-                //주문 항목이 비어있다면 이름과 수량을 입력받지 않는다
+            case 2: {// 메뉴 삭제
+                // 주문 항목이 비어있다면 이름과 수량을 입력받지 않는다
                 if (order_items.empty()) {
                     cout << "삭제할 항목이 존재하지 않습니다." << endl;
                     break;
@@ -62,22 +62,22 @@ void Order::Change_ordermenu(MenuList& menulist) {
                 cout << endl << "삭제할 수량을 입력해주세요 : ";
                 cin >> count;
                 cin.ignore();
-                //메뉴 이름과 수량을 입력받아 삭제
+                // 메뉴 이름과 수량을 입력받아 삭제
                 delete_ordermenu(name, count);
                 break;
             }
-            case 3: {//메뉴 이름과 수량을 입력받아 삭제
-
+            case 3: { // 메뉴 이름과 수량을 입력받아 삭제
                 Check_order_items();
                 break;
             }
-            case 4: {//메뉴판 보기
+            case 4: { // 메뉴판 보기
                 menulist.showList();
+                break;
             }
-            case 0: {//종료
+            case 0: { // 종료
                 return;
             }
-            default: {//잘못된 입력일 시 
+            default: { // 잘못된 입력일 시 
                 cout << "잘못된 입력입니다." << endl;
             }
             }
