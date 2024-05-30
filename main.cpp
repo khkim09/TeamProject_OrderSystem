@@ -3,6 +3,7 @@
 #include "CustomerList.h"
 using namespace std;
 
+// 사용자 입력으로 메뉴 추가
 Menu addMenuFromInput() {
     string name;
     int price;
@@ -19,7 +20,8 @@ Menu addMenuFromInput() {
     return Menu(name, price, introduce);
 }
 
-Customer createCustomerFromInput() { // 주문자 정보 생성
+// 주문자 정보 생성
+Customer createCustomerFromInput() {
     string name;
     string birth;
     string phoneNum;
@@ -44,7 +46,8 @@ Customer createCustomerFromInput() { // 주문자 정보 생성
     return Customer(name, birth, phoneNum, address, request, paymentMethod);
 }
 
-void menu() { // 회원 정보 관련 기능 구현 메뉴판
+// 회원 정보 관련 기능 구현 메뉴판
+void menu() {
     cout << "******************************" << endl;
     cout << "-----1. 회원 정보 추가------" << endl;
     cout << "-----2. 회원 정보 삭제------" << endl;
@@ -56,7 +59,8 @@ void menu() { // 회원 정보 관련 기능 구현 메뉴판
     cout << "******************************" << endl;
 }
 
-bool isquit(char choice) { // 프로그램 종료 입력 여부 판단
+// 프로그램 종료 입력 여부 판단
+bool isquit(char choice) {
     if (choice == 'q' || choice == 'Q')
         return true;
     return false;
@@ -241,7 +245,7 @@ int main() {
                 }
             }
         }
-        else if (job == 3) {
+        else if (job == 3) { //주문정보 프로그램
             loop = true;
             char choice;
 
@@ -261,72 +265,72 @@ int main() {
                 cout << endl;
 
                 switch (choice) {
-                case '1': { // 회원 정보 등록 기능 추가
+                case '1': { // 주문 시작하기. 새로운 주문 추가
                     if (orderList.new_order(menulist, customerList)) {
-                        Customer customer = createCustomerFromInput();
+                        Customer customer = createCustomerFromInput(); // 고객정보 추가
                         customerList.addCustomer(customer);
                         customerList.saveToFile("Customers.txt");
                     }
                     cout << endl;
                     break;
                 }
-                case '2': {
+                case '2': { // 주문 메뉴 변경 및 추가하기
                     cout << "주문번호를 입력해주세요 : ";
                     int orderN;
-                    cin >> orderN;
+                    cin >> orderN; // 주문번호 입력 후 변경 진행
                     orderList.change_order(orderN, menulist);
                     orderList.write_Orderlist_file("orders.txt");
                     cout << endl;
                     break;
                 }
-                case '3': {
+                case '3': { // 주문 삭제하기
                     cout << "주문번호를 입력해주세요 : ";
                     int orderN;
-                    cin >> orderN;
+                    cin >> orderN; // 주문번호 입력 후 삭제 진행
                     orderList.delete_order(orderN);
                     orderList.write_Orderlist_file("orders.txt");
                     cout << endl;
                     break;
                 }
-                case '4': {
+                case '4': { // 주문 완료하기
                     cout << "주문번호를 입력해주세요 : ";
                     int orderN;
-                    cin >> orderN;
+                    cin >> orderN; // 완료할 주문번호 입력 후 완료 진행
                     orderList.complete_order(orderN);
                     orderList.write_Orderlist_file("orders.txt");
                     cout << endl;
                     break;
                 }
-                case '5': {
+                case '5': { // 주문서 출력하기
                     cout << "주문번호를 입력해주세요 : ";
                     int orderN;
-                    cin >> orderN;
+                    cin >> orderN; // 주문번호 입력 후 해당 주문서 출력
                     orderList.print_order(orderN);
                     cout << endl;
                     break;
                 }
-                case '6': {
+                case '6': { // 주문 현황 확인하기
                     orderList.show_order_count();
                     cout << endl;
                     break;
                 }
-                case '7': {
+                case '7': { // 남은 주문 건 수 확인하기
                     orderList.show_remaining_order();
                     cout << endl;
                     break;
                 }
-                case 'q': case 'Q': {
+                case 'q': case 'Q': { // 주문 프로그램 종료
                     orderList.write_Orderlist_file("orders.txt"); // 주문 정보 파일에 저장
                     cout << "+++주문 정보 업데이트 완료+++" << endl << endl;
                     loop = false;
-                    break;
+                    break; // 종료
                 }
-                default:
+                default: // choice가 잘못 입력될 경우
                     cout << "잘못된 명령 선택입니다." << endl << endl;
                 }
             }
         }
-        else if (job == 4) {
+        else if (job == 4) { // Order System Program 종료
             cout << "--프로그램을 종료합니다.--" << endl;
             break;
         }

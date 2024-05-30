@@ -10,8 +10,8 @@ void MenuList::addMenu(Menu newMenu) {
 void MenuList::removeMenu(string findMenuName) {
 	vector<Menu>::iterator iter;
 
-	for (iter = List.begin(); iter != List.end();) {
-		if (findMenuName.compare(iter->getName()) == 0) {
+	for (iter = List.begin(); iter != List.end();) { // 메뉴판의 처음부터 끝까지
+		if (findMenuName.compare(iter->getName()) == 0) { // 삭제할 메뉴의 이름을 찾은 경우
 			iter = List.erase(iter);
 		}
 		else {
@@ -26,8 +26,8 @@ void MenuList::removeMenu(string findMenuName) {
 void MenuList::changeMenu(string findMenuName) {
 	vector<Menu>::iterator iter;
 
-	for (iter = List.begin(); iter != List.end();) {
-		if (findMenuName.compare(iter->getName()) == 0) {
+	for (iter = List.begin(); iter != List.end();) { // 메뉴판의 처음부터 끝까지
+		if (findMenuName.compare(iter->getName()) == 0) { // 변경할 메뉴의 이름을 찾은 경우
 			cout << "------변경 요소 선택------" << endl;
 			cout << "----메뉴 이름 변경 = 1----" << endl;
 			cout << "----메뉴 가격 변경 = 2----" << endl;
@@ -80,7 +80,7 @@ void MenuList::changeMenu(string findMenuName) {
 void MenuList::showList() {
 	vector<Menu>::iterator iter;
 	cout << "--------------------- 메뉴 ----------------------" << endl;
-	for (iter = List.begin(); iter != List.end(); iter++) {
+	for (iter = List.begin(); iter != List.end(); iter++) { // 메뉴판의 처음부터 끝까지
 		cout << iter->getName() << " " << iter->getPrice() << " " << iter->getIntroduce() << endl;
 	}
 	cout << "-----------------------------------------------" << endl;
@@ -98,16 +98,12 @@ vector<Menu>::iterator MenuList::getEnd() {
 	return List.end();
 }
 
-
-
-
-
-
-/*임의로 추가한 곳!!!!!*/
+// 메뉴판을 반환
 vector<Menu>& MenuList::getList() {
 	return List;
 }
 
+// 파일로부터 메뉴판 읽어들이기
 void MenuList::readFromFile(const string& filename) {
 	ifstream file(filename);
 	if (!file.is_open()) {
@@ -134,6 +130,7 @@ void MenuList::readFromFile(const string& filename) {
 	file.close();
 }
 
+// 메뉴판 파일에 저장
 void MenuList::saveToFile(const string& filename) {
 	ofstream F(filename);
 	if (!F.is_open()) {
@@ -143,7 +140,7 @@ void MenuList::saveToFile(const string& filename) {
 	
 	vector<Menu>::iterator iter;
 
-	for (iter = getBegin(); iter != getEnd(); iter++) {
+	for (iter = getBegin(); iter != getEnd(); iter++) { // 메뉴판의 처음부터 끝까지
 		if (iter == getBegin()) {
 			F << iter->getName();
 		}

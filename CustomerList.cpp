@@ -3,7 +3,8 @@
 #include <sstream>
 #include "CustomerList.h"
 
-string trim(const string& str) { // file에 저장된 각 정보 슬라이싱
+// file에 저장된 각 정보 슬라이싱
+string trim(const string& str) {
     size_t first = str.find_first_not_of(' ');
     if (first == string::npos) {
         return ""; // 모든 문자가 공백인 경우
@@ -12,7 +13,8 @@ string trim(const string& str) { // file에 저장된 각 정보 슬라이싱
     return str.substr(first, last - first + 1);
 }
 
-void CustomerList::loadFromFile(const string& filename) { // file 정보 읽어오기
+// file 정보 읽어오기
+void CustomerList::loadFromFile(const string& filename) {
 	ifstream inFile(filename);
 	if (!inFile.is_open()) {
 		cerr << "File error : " << filename << endl;
@@ -44,7 +46,8 @@ void CustomerList::loadFromFile(const string& filename) { // file 정보 읽어오기
     inFile.close();
 }
 
-void CustomerList::saveToFile(const string& filename) const{ // file에 저장
+// file에 저장
+void CustomerList::saveToFile(const string& filename) const{
     ofstream outFile(filename);
     if (!outFile.is_open()) {
         cerr << "Error opening file : " << filename << endl;
@@ -56,7 +59,7 @@ void CustomerList::saveToFile(const string& filename) const{ // file에 저장
     outFile.close();
 }
 
-// 05.30 added (새로 입력한 주문자의 정보가 기존과 일치 시, 거부 Alg 추가)
+// 주문자 정보 등록 - 05.30 added (새로 입력한 주문자의 정보가 기존과 일치 시, 거부 Alg 추가)
 void CustomerList::addCustomer(Customer& newCustomer) {
     string name = newCustomer.getName();
     string phoneNum = newCustomer.getPhoneNum();
@@ -70,7 +73,8 @@ void CustomerList::addCustomer(Customer& newCustomer) {
     cout << endl << "주문자 정보가 등록되었습니다." << endl << endl;
 }
 
-bool CustomerList::deleteCustomer(string& phoneNum) { // 주문자 정보 삭제
+// 주문자 정보 삭제
+bool CustomerList::deleteCustomer(string& phoneNum) {
     for (auto it = customers.begin(); it != customers.end(); ++it)
         if (it->getPhoneNum() == phoneNum) {
             customers.erase(it); // customerList에서 삭제 작업
@@ -80,7 +84,7 @@ bool CustomerList::deleteCustomer(string& phoneNum) { // 주문자 정보 삭제
 }
 
 // 주문자 정보 수정 (전화번호로 주문자 구분, 정보 수정 type = field, 새로운 정보)
-bool CustomerList::updateCustomer(string& phoneNum, int field, string& newValue) { // 주문자 정보 수정
+bool CustomerList::updateCustomer(string& phoneNum, int field, string& newValue) {
     for (auto& customer : customers) {
         if (customer.getPhoneNum() == phoneNum) {
             switch (field) {
@@ -101,7 +105,8 @@ bool CustomerList::updateCustomer(string& phoneNum, int field, string& newValue)
     return false;
 }
 
-bool CustomerList::printCustomerInfo(string& phoneNum) { // 주문자 1명의 정보 출력
+// 주문자 1명의 정보 출력
+bool CustomerList::printCustomerInfo(string& phoneNum) {
     for (auto& customer : customers) {
         if (customer.getPhoneNum() == phoneNum) {
             cout << "성함 : " << customer.getName() << endl;
@@ -118,7 +123,8 @@ bool CustomerList::printCustomerInfo(string& phoneNum) { // 주문자 1명의 정보 출
     return false;
 }
 
-void CustomerList::printAllCustomers(const string& filename) { // 모든 주문자 정보 출력
+// 모든 주문자 정보 출력
+void CustomerList::printAllCustomers(const string& filename) {
     ifstream inFile(filename);
 
     // 등록된 주문자 정보가 없을 시 (file == isEmpty())
@@ -139,6 +145,7 @@ void CustomerList::printAllCustomers(const string& filename) { // 모든 주문자 정
     }
 }
 
-void CustomerList::clearAllCustomers() { // 주문자 정보 모두 삭제
+// 주문자 정보 모두 삭제
+void CustomerList::clearAllCustomers() {
     customers.clear();
 }

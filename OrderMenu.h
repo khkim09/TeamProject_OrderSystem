@@ -16,14 +16,19 @@ private:
 	string name; // 메뉴 이름
 	int price; //가격
 	int count; //수량
+
 public:
 	//생성자
 	OrderMenu(string name, int count);
 
 	//멤버함수
+
+	//멤버를 가져오는 함수
 	string getName() const;
 	int getPrice() const;
 	int getCount() const;
+
+	//멤버를 입력하는 함수
 	void setCount(int newCount);
 	void setPrice(int newPrice);
 };

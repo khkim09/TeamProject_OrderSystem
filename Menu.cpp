@@ -8,14 +8,17 @@ Menu::Menu(string name, int price, string introduce) {
 	this->introduce = introduce;
 }
 
+// 메뉴 이름 반환
 string Menu::getName() {
 	return this->name;
 }
 
+// 메뉴 가격 반환
 int Menu::getPrice() {
 	return this->price;
 }
 
+// 메뉴 가격 반환
 string Menu::getIntroduce() {
 	return this->introduce;
 }

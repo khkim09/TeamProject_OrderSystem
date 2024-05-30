@@ -34,10 +34,12 @@ void Time::printTime() const {
     std::cout << year << "." << month << "." << day << ". " << hour << ":" << min << ":" << sec;
 }
 
+//Time 읽기
 void Time::loadFromFile(ifstream& file) {
 	file >> sec >> min >> hour >> day >> month >> year;
 }
 
+//Time 쓰기
 void Time::saveToFile(ofstream& file) const {
 	file << sec << " " << min << " " << hour << " "
 		<< day << " " << month << " " << year << " ";

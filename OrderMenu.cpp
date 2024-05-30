@@ -8,9 +8,9 @@ Menu.cpp 참조하여 만듦(회의 후 합치는 방향성도 괜찮을듯)
 #include "OrderMenu.h"
 
 //생성자
-OrderMenu::OrderMenu(string name, int count):
-	name(name),count(count),price(0){
-//Menulist를 통해 price를 추가
+OrderMenu::OrderMenu(string name, int count) :
+    name(name), count(count), price(0) {
+    //price는 Menulist를 통해 추가. 다른 함수에서 구현
 }
 
 //멤버함수

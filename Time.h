@@ -11,10 +11,12 @@
 using namespace std;
 
 struct Time {
+	//시간
 	int sec;
 	int min;
 	int hour;
 
+	//날짜
 	int day;
 	int month;
 	int year;
@@ -23,8 +25,8 @@ struct Time {
 	Time();
 
 	// 멤버 함수
-	void setTime();
-	void printTime() const;
-	void loadFromFile(ifstream& file);
-	void saveToFile(ofstream& file) const;
+	void setTime(); //현재 시간 세팅
+	void printTime() const; //시간 출력
+	void loadFromFile(ifstream& file); //시간 읽기
+	void saveToFile(ofstream& file) const; //시간 쓰기
 };
