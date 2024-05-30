@@ -19,7 +19,7 @@ Menu addMenuFromInput() {
     return Menu(name, price, introduce);
 }
 
-Customer createCustomerFromInput() {
+Customer createCustomerFromInput() { // 주문자 정보 생성
     string name;
     string birth;
     string phoneNum;
@@ -27,7 +27,7 @@ Customer createCustomerFromInput() {
     string request;
     string paymentMethod;
 
-    cout << "-----------회원 정보 등록-----------";
+    cout << "-------회원(주문자) 정보 등록-------";
     cout << "주문자 성함 : ";
     getline(cin, name);
     cout << "주문자 생년월일 (YY-MM-DD) : ";
@@ -44,19 +44,19 @@ Customer createCustomerFromInput() {
     return Customer(name, birth, phoneNum, address, request, paymentMethod);
 }
 
-void menu() {
+void menu() { // 회원 정보 관련 기능 구현 메뉴판
     cout << "******************************" << endl;
-    cout << "-----1. 주문자 정보 추가------" << endl;
-    cout << "-----2. 주문자 정보 삭제------" << endl;
-    cout << "-----3. 주문자 정보 수정------" << endl;
-    cout << "-----4. 주문자 정보 출력------" << endl;
-    cout << "---5. 모든 주문자 정보 출력---" << endl;
-    cout << "---6. 모든 주문자 정보 삭제---" << endl;
+    cout << "-----1. 회원 정보 추가------" << endl;
+    cout << "-----2. 회원 정보 삭제------" << endl;
+    cout << "-----3. 회원 정보 수정------" << endl;
+    cout << "-----4. 회원 정보 출력------" << endl;
+    cout << "---5. 모든 회원 정보 출력---" << endl;
+    cout << "---6. 모든 회원 정보 삭제---" << endl;
     cout << "------프로그램 종료 (Q/q)-----" << endl;
     cout << "******************************" << endl;
 }
 
-bool isquit(char choice) {
+bool isquit(char choice) { // 프로그램 종료 입력 여부 판단
     if (choice == 'q' || choice == 'Q')
         return true;
     return false;
@@ -80,10 +80,10 @@ int main() {
     while (true) {
         int job;
 
-        cout << "---------1.메뉴판---------" << endl;
-        cout << "------2.주문자 정보-------" << endl;
-        cout << "-------3.주문 화면--------" << endl;
-        cout << "-----4.프로그램 종료------" << endl;
+        cout << "---------1.메뉴판----------" << endl;
+        cout << "----2.회원(주문자) 정보----" << endl;
+        cout << "--------3.주문 화면--------" << endl;
+        cout << "------4.프로그램 종료------" << endl;
 
         cout << endl << "실행할 작업 번호를 입력해주세요 : ";
         cin >> job;
