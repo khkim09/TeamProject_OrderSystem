@@ -152,12 +152,13 @@ int main() {
                 }
             }
         }
-        else if (job == 2) {
+        else if (job == 2) { // 회원(주문자) 정보 관련 메뉴 실행
             loop = true;
             char choice;
 
+            // 이하 모든 메뉴에 대해 바로 주문자 리스트(파일) 업데이트 되도록 구현
             while (loop) {
-                menu();
+                menu(); // 주문자 정보 관련 메뉴판 출력
                 cout << endl;
                 cout << "실행할 메뉴 번호를 입력해주세요 : ";
                 cin >> choice;
@@ -168,15 +169,15 @@ int main() {
                 case '1': { // 주문자 정보 추가
                     Customer customer = createCustomerFromInput();
                     customerList.addCustomer(customer);
-                    customerList.saveToFile("Customers.txt");
+                    customerList.saveToFile("Customers.txt"); 
                     break;
                 }
                 case '2': { // 주문자 정보 삭제
-                    string delPhoneNum;
-                    cout << "삭제할 주문자의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
+                    string delPhoneNum; // 전화번호로 회원 조회
+                    cout << "삭제할 회원님의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
                     getline(cin, delPhoneNum);
                     if (customerList.deleteCustomer(delPhoneNum))
-                        cout << "주문자 정보 삭제가 완료되었습니다." << endl;
+                        cout << "회원 정보 삭제가 완료되었습니다." << endl;
                     else
                         cout << "해당 주문자 정보를 찾을 수 없습니다." << endl;
                     cout << endl;
@@ -184,9 +185,9 @@ int main() {
                     break;
                 }
                 case '3': { // 주문자 정보 수정
-                    string phoneNum, newValue;
+                    string phoneNum, newValue; // 전화번호로 조회, 수정할 정보 (대체할 값)
                     int field;
-                    cout << "수정할 주문자의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
+                    cout << "수정할 회원님의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
                     getline(cin, phoneNum);
                     cout << "수정할 정보를 선택해주세요 (1 : 전화번호 | 2 : 배송 받을 주소 | 3 : 요청사항 | 4 : 결제수단) : ";
                     cin >> field;
@@ -194,19 +195,19 @@ int main() {
                     cout << "업데이트 할 정보를 입력해주세요 : ";
                     getline(cin, newValue);
                     if (customerList.updateCustomer(phoneNum, field, newValue))
-                        cout << "주문자 정보 수정이 완료되었습니다." << endl;
+                        cout << "회원 정보 수정이 완료되었습니다." << endl;
                     else
-                        cout << "해당 주문자 정보가 없거나 수정할 정보 입력이 잘못되었습니다." << endl;
+                        cout << "해당 회원 정보가 없거나 수정할 정보 입력이 잘못되었습니다." << endl;
                     cout << endl;
                     customerList.saveToFile("Customers.txt");
                     break;
                 }
                 case '4': { // 주문자 1명의 정보 출력
                     string findPhoneNum;
-                    cout << "출력할 주문자의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
+                    cout << "출력할 회원님의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
                     getline(cin, findPhoneNum);
                     if (!customerList.printCustomerInfo(findPhoneNum))
-                        cout << "주문자 정보를 찾을 수 없습니다." << endl;
+                        cout << "회원 정보를 찾을 수 없습니다." << endl;
                     cout << endl;
                     break;
                 }
