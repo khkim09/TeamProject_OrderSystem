@@ -29,7 +29,7 @@ Customer createCustomerFromInput() {
     string request;
     string paymentMethod;
 
-    cout << "-------회원(주문자) 정보 등록-------";
+    cout << "-------회원(주문자) 정보 등록-------" << endl;
     cout << "주문자 성함 : ";
     getline(cin, name);
     cout << "주문자 생년월일 (YY-MM-DD) : ";
