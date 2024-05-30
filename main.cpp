@@ -27,6 +27,7 @@ Customer createCustomerFromInput() {
     string request;
     string paymentMethod;
 
+    cout << "-----------회원 정보 등록-----------";
     cout << "주문자 성함 : ";
     getline(cin, name);
     cout << "주문자 생년월일 (YY-MM-DD) : ";
@@ -164,13 +165,13 @@ int main() {
                 cout << endl;
 
                 switch (choice) {
-                case '1': {
+                case '1': { // 주문자 정보 추가
                     Customer customer = createCustomerFromInput();
                     customerList.addCustomer(customer);
                     customerList.saveToFile("Customers.txt");
                     break;
                 }
-                case '2': {
+                case '2': { // 주문자 정보 삭제
                     string delPhoneNum;
                     cout << "삭제할 주문자의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
                     getline(cin, delPhoneNum);
@@ -182,7 +183,7 @@ int main() {
                     customerList.saveToFile("Customers.txt");
                     break;
                 }
-                case '3': {
+                case '3': { // 주문자 정보 수정
                     string phoneNum, newValue;
                     int field;
                     cout << "수정할 주문자의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
@@ -200,7 +201,7 @@ int main() {
                     customerList.saveToFile("Customers.txt");
                     break;
                 }
-                case '4': {
+                case '4': { // 주문자 1명의 정보 출력
                     string findPhoneNum;
                     cout << "출력할 주문자의 전화번호를 입력해주세요 (010-XXXX-XXXX) : ";
                     getline(cin, findPhoneNum);
@@ -209,12 +210,12 @@ int main() {
                     cout << endl;
                     break;
                 }
-                case '5': {
+                case '5': { // 모든 주문자 정보 출력
                     customerList.printAllCustomers("Customers.txt");
                     cout << endl;
                     break;
                 }
-                case '6': {
+                case '6': { // 모든 주문자 정보 삭제
                     char accept;
                     cout << "정말로 모든 주문자 정보를 삭제하시겠습니까? (y/n) : ";
                     cin >> accept;
@@ -228,7 +229,7 @@ int main() {
                     customerList.saveToFile("Customers.txt");
                     break;
                 }
-                case 'q': case 'Q': {
+                case 'q': case 'Q': { // 주문자 관련 프로그램 종료
                     customerList.saveToFile("Customers.txt");
                     cout << "+++주문자 정보 업데이트 완료+++" << endl << endl;
                     loop = false;
@@ -259,8 +260,12 @@ int main() {
                 cout << endl;
 
                 switch (choice) {
-                case '1': {
-                    orderList.new_order(menulist, customerList);
+                case '1': { // 회원 정보 등록 기능 추가
+                    if (orderList.new_order(menulist, customerList)) {
+                        Customer customer = createCustomerFromInput();
+                        customerList.addCustomer(customer);
+                        customerList.saveToFile("Customers.txt");
+                    }
                     cout << endl;
                     break;
                 }

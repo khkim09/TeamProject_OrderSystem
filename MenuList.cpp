@@ -79,7 +79,7 @@ void MenuList::changeMenu(string findMenuName) {
 // 메뉴판 출력
 void MenuList::showList() {
 	vector<Menu>::iterator iter;
-	cout << "---------------------- 메뉴 ---------------------" << endl;
+	cout << "--------------------- 메뉴 ----------------------" << endl;
 	for (iter = List.begin(); iter != List.end(); iter++) {
 		cout << iter->getName() << " " << iter->getPrice() << " " << iter->getIntroduce() << endl;
 	}

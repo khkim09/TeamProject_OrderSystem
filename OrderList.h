@@ -33,7 +33,7 @@ public:
 	//Orderlist 파일 쓰기
 	void write_Orderlist_file(const string& filename);
 
-	void new_order(MenuList& menulist,CustomerList& customerlist); //새로운 주문. 새로운 주문 번호를 부여하여 Orders에 추가하고 주문메뉴 목록또한 입력받는다.
+	bool new_order(MenuList& menulist,CustomerList& customerlist); //새로운 주문. 새로운 주문 번호를 부여하여 Orders에 추가하고 주문메뉴 목록또한 입력받는다.
 	void change_order(int orderN, MenuList& menulist); //주문 메뉴 수량을 변경하거나 추가한다.
 	void delete_order(int orderN); //주문내역 아예 삭제(!complete일때만 가능)
 	void complete_order(int orderN); //주문 완료 알림 출력

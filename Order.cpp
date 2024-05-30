@@ -27,25 +27,27 @@ void Order::Change_ordermenu(MenuList& menulist) {
     else {
         while (true) {
             cout << endl;
-            cout << "1.메뉴 추가" << endl;
-            cout << "2.메뉴 삭제" << endl;
-            cout << "3.주문 항목 보기" << endl;
-            cout << "4.메뉴 보기" << endl;
-            cout << "0.주문 종료하기" << endl;
-            cout << "번호를 입력해주세요";
+            cout << "1. 메뉴 추가" << endl;
+            cout << "2. 메뉴 삭제" << endl;
+            cout << "3. 주문 항목 보기" << endl;
+            cout << "4. 메뉴 보기" << endl;
+            cout << "0. 주문 종료하기" << endl << endl;
+            cout << "번호를 입력해주세요 : ";
 
             int order;
             cin >> order;
+            cin.ignore();
+
             switch (order) {
             case 1: {
                 string name;
                 int count;
 
-                cout <<endl<< "추가할 메뉴 이름을 입력해주세요.";
-                getchar();
+                cout <<endl<< "추가할 메뉴 이름을 입력해주세요 : ";
                 getline(cin, name);
-                cout <<endl<< "추가할 수량을 입력해주세요.";
+                cout <<endl<< "추가할 수량을 입력해주세요 : ";
                 cin >> count;
+                cin.ignore();
                 Add_ordermenu(name, count,menulist);
                 break;
             }
@@ -56,11 +58,11 @@ void Order::Change_ordermenu(MenuList& menulist) {
                 }
                 string name;
                 int count;
-                cout <<endl<< "삭제할 메뉴 이름을 입력해주세요.";
-                getchar();
+                cout <<endl<< "삭제할 메뉴 이름을 입력해주세요 : ";
                 getline(cin, name);
-                cout <<endl<< "삭제할 수량을 입력해주세요.";
+                cout <<endl<< "삭제할 수량을 입력해주세요 : ";
                 cin >> count;
+                cin.ignore();
                 delete_ordermenu(name, count);
                 break;
             }
@@ -156,16 +158,16 @@ void Order::delete_ordermenu(string name, int count) {
 
 
 void Order::Check_order() const {
-    cout << "주문 번호: " << order_number << endl;
-    cout << "주문 시간: "; order_time.printTime(); cout << endl;
+    cout << "주문 번호 : " << order_number << endl;
+    cout << "주문 시간 : "; order_time.printTime(); cout << endl;
     Check_order_items();
-    cout << "총액: " << total << endl;
-    cout << "할인: " << (discount ? "O" : "X") << endl;
-    cout << "회원: " << (member ? "O" : "X")<<endl;
-    cout << "결제 금액: " << receipt_total << endl;
-    cout << "주문 완료: " << (complete ? "O" : "X") << endl;
+    cout << "총액 : " << total << endl;
+    cout << "할인 : " << (discount ? "O" : "X") << endl;
+    cout << "회원 : " << (member ? "O" : "X")<<endl;
+    cout << "결제 금액 : " << receipt_total << endl;
+    cout << "주문 완료 : " << (complete ? "O" : "X") << endl;
     if (complete) {
-        cout << "주문 완료 시간: "; complete_time.printTime() ; cout << endl;
+        cout << "주문 완료 시간 : "; complete_time.printTime() ; cout << endl;
     }
 }
 
@@ -174,7 +176,7 @@ void Order::Check_order_items()const {
         cout << "주문 항목이 존재하지 않습니다!" << endl;
         return;
     }
-    cout << "주문 항목:" << endl;
+    cout << "주문 항목 :" << endl;
     for (const auto& item : order_items) {
         cout << "- " << item.getName() << "    " << item.getCount() << endl;
     }

@@ -6,6 +6,7 @@
 */
 #include "OrderList.h"
 #include <iostream>
+#include <sstream>
 
 
 // 정적 멤버 초기화
@@ -23,14 +24,14 @@ void OrderList::read_Orderlist_file(const string& filename) {
     }
 
     Orders.clear();
-    totalOrderCount = 0;
-    completeOrderCount = 0;
-    remainingOrderCount = 0;
 
-    int orderNumber, total, receiptTotal, complete,member;
-    string name;
-    int count, price;
-    while (file >> orderNumber >> total >> receiptTotal >> complete>>member) {
+    // 파일의 맨 처음에 주문 건수들을 읽어들임
+    file >> totalOrderCount >> completeOrderCount >> remainingOrderCount;
+    file.ignore(numeric_limits<streamsize>::max(), '\n');  // 행 끝까지 무시
+
+    int orderNumber, total, receiptTotal, complete, member;
+    while (file >> orderNumber >> total >> receiptTotal >> complete >> member) {
+        file.ignore(); // 행 끝의 공백 문자 제거
         Order order(orderNumber);
         order.set_total(total);
         order.set_receipt_total(receiptTotal);
@@ -41,24 +42,24 @@ void OrderList::read_Orderlist_file(const string& filename) {
         orderTime.loadFromFile(file);
         order.set_order_time(orderTime);
 
-        
-
         Time completeTime;
         completeTime.loadFromFile(file);
         order.set_complete_time(completeTime);
 
-        while (file >> name >> count >> price) {
-            if (name == "END_OF_ORDER") break;
+        string line;
+        while (getline(file, line)) {
+            if (line == "END_OF_ORDER") break;
+
+            size_t first_quote = line.find('\"');
+            size_t second_quote = line.find('\"', first_quote + 1);
+
+            string name = line.substr(first_quote + 1, second_quote - first_quote - 1);
+            istringstream iss(line.substr(second_quote + 1));
+            int count, price;
+            iss >> count >> price;
             order.Add_ordermenu(name, count, price);
         }
         Orders.push_back(order);
-        totalOrderCount++;
-        if (complete) {
-            completeOrderCount++;
-        }
-        else {
-            remainingOrderCount++;
-        }
     }
     file.close();
 }
@@ -71,6 +72,9 @@ void OrderList::write_Orderlist_file(const string& filename) {
         return;
     }
 
+    // 파일의 맨 처음에 주문 건수들을 기록
+    file << totalOrderCount << " " << completeOrderCount << " " << remainingOrderCount << endl;
+
     for (auto& order : Orders) {
         file << order.get_order_number() << " "
             << order.get_total() << " "
@@ -78,13 +82,11 @@ void OrderList::write_Orderlist_file(const string& filename) {
             << order.isComplete() << " "
             << order.isMember() << endl;
 
-        
-
         order.get_order_time().saveToFile(file);
         order.get_complete_time().saveToFile(file);
 
         for (auto& item : order.getItems()) {
-            file << item.getName() << " "
+            file << "\"" << item.getName() << "\" " // 수동으로 따옴표 추가
                 << item.getCount() << " "
                 << item.getPrice() << endl;
         }
@@ -95,21 +97,23 @@ void OrderList::write_Orderlist_file(const string& filename) {
 
 
 // 새로운 주문 추가
-void OrderList::new_order(MenuList& menulist,CustomerList& customerlist) {
+bool OrderList::new_order(MenuList& menulist,CustomerList& customerlist) {
     Order newOrder(totalOrderCount+1);
 
     int choice;
+    bool answer = false;
 
     while (true) {
         cout << "회원이십니까?" << endl;
-        cout << "1.예" << endl;
-        cout << "2.아니오" << endl;
+        cout << "1. 예" << endl;
+        cout << "2. 아니오" << endl;
 
         cin >> choice;
         cin.ignore();
+        cout << endl;
 
         if (choice == 1) {
-            cout << "회원 조회를 위해 전화번호를 입력해주십시오.(010-XXXX-XXXX)" << endl;
+            cout << "회원 조회를 위해 전화번호를 입력해주십시오 (010-XXXX-XXXX) : ";
             string phone_number;
 
             getline(cin, phone_number);
@@ -118,55 +122,59 @@ void OrderList::new_order(MenuList& menulist,CustomerList& customerlist) {
                 cout << phone_number << " 조회중.." << endl << endl;
                 if (customer.getPhoneNum() == phone_number) {
                     newOrder.setMember(true);
+                    cout << "'" << customer.getName() << "'님 확인되었습니다!" << endl;
                     break;
                 }
             }
 
-            if (newOrder.isMember()) {
-                cout << "확인되었습니다!" << endl;
-            }
-            else {
+            if (!newOrder.isMember()) {
                 cout << "회원 정보가 존재하지 않습니다." << endl;
             }
-
             break;
         }
-        else if (choice == 2) {
-            //회원 추가를 할까요말까요,,,
+        else if (choice == 2) { // 회원 정보 등록 과정
+            char ans;
+            cout << "회원 등록을 진행하시겠습니까? (y/n) : ";
+            cin >> ans; // 등록 여부 (ans)
+            cin.ignore();
+            cout << endl;
+
+            if (ans == 'y') {
+                answer = true; // main으로 반환할 bool값 (answer)
+                cout << "주문을 종료하시면 회원 등록 화면으로 넘어갑니다." << endl;
+            }
             break;
         }
         else {
             cout << "잘못된 입력입니다." << endl;
         }
-            
     }
 
     newOrder.Change_ordermenu(menulist);
 
     if (newOrder.is_order_items_empty()) {
         cout << "주문 항목이 비어 있으므로 주문이 추가되지 않습니다." << endl;
-        return;
+        return false;
     }
     
     Orders.push_back(newOrder);
     totalOrderCount++;
     remainingOrderCount++;
-    cout << totalOrderCount << "번 주문이 추가되었습니다!"<<endl;
+    cout << totalOrderCount << "번 주문이 추가되었습니다!"<< endl;
+    return answer;
 }
 
 // 주문 변경
-void OrderList::change_order(int orderN,MenuList& menulist) {
+void OrderList::change_order(int orderN, MenuList& menulist) {
     for (auto it = Orders.begin(); it != Orders.end(); ++it) {
         if (it->get_order_number() == orderN) {
             if (!it->isComplete()) {
                 it->Change_ordermenu(menulist);
 
                 if (it->is_order_items_empty()) {
-                    cout << "주문 항목이 비어있으므로 주문이 삭제됩니다."<<endl;
+                    cout << "주문 항목이 비어있으므로 주문이 삭제됩니다." << endl;
                     Orders.erase(it);
                 }
-
-
             }
             else {
                 cout << "이미 완료된 주문입니다." << endl;
@@ -226,11 +234,10 @@ void OrderList::print_order(int orderN) {
     for (auto& order : Orders) {
         if (order.get_order_number() == orderN) {
             order.Check_order();
+            return;
         }
-        return;
     }
-
-    cout << "존재하지 않는 주문번호입니다." << endl;  
+    cout << "존재하지 않는 주문번호입니다." << endl;
 }
 
 // 주문 건수 출력
