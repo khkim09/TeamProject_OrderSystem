@@ -30,7 +30,7 @@ void CustomerList::loadFromFile(const string& filename) {
         getline(ss, request, '/');
         getline(ss, paymentMethod, '/');
 
-        // 이 부분 수정됨
+        // 05.29 modified
         name = trim(name);
         birth = trim(birth);
         phoneNum = trim(phoneNum);
@@ -56,21 +56,18 @@ void CustomerList::saveToFile(const string& filename) const{
     outFile.close();
 }
 
-void CustomerList::printAllCustomers() {
-    cout << "---------주문자 정보----------" << endl;
+// 05.30 added
+void CustomerList::addCustomer(Customer& newCustomer) {
+    string name = newCustomer.getName();
+    string phoneNum = newCustomer.getPhoneNum();
     for (auto& customer : customers) {
-        cout << "성함 : " << customer.getName() << endl;
-        cout << "생년월일 : " << customer.getBirth() << endl;
-        cout << "전화번호 : " << customer.getPhoneNum() << endl;
-        cout << "주소 : " << customer.getAddress() << endl;
-        cout << "요청사항 : " << customer.getRequest() << endl;
-        cout << "결제수단 : " << customer.getPaymentMethod() << endl;
-        cout << "------------------------------" << endl;
+        if (customer.getName() == name && customer.getPhoneNum() == phoneNum) {
+            cout << endl << "이미 등록된 정보입니다!" << endl << endl;
+            return;
+        }
     }
-}
-
-void CustomerList::addCustomer(Customer& customer) {
-    customers.push_back(customer);
+    customers.push_back(newCustomer);
+    cout << endl << "주문자 정보가 등록되었습니다." << endl << endl;
 }
 
 bool CustomerList::deleteCustomer(string& phoneNum) {
@@ -118,6 +115,19 @@ bool CustomerList::printCustomerInfo(string& phoneNum) {
         }
     }
     return false;
+}
+
+void CustomerList::printAllCustomers() {
+    cout << "---------주문자 정보----------" << endl;
+    for (auto& customer : customers) {
+        cout << "성함 : " << customer.getName() << endl;
+        cout << "생년월일 : " << customer.getBirth() << endl;
+        cout << "전화번호 : " << customer.getPhoneNum() << endl; // 05.30 modified
+        cout << "주소 : " << customer.getAddress() << endl;
+        cout << "요청사항 : " << customer.getRequest() << endl;
+        cout << "결제수단 : " << customer.getPaymentMethod() << endl;
+        cout << "------------------------------" << endl;
+    }
 }
 
 void CustomerList::clearAllCustomers() {

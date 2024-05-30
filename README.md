@@ -11,5 +11,5 @@
 ---
 
 - need to add
-	- [ ] customerList에 이름, 전화번호 일치 : '이미 있는 사용자' 출력
+	- [X] customerList에 이름, 전화번호 일치 : '이미 등록된 사용자' 출력
 	- [ ] customer 리스트 비어있을 시 : '등록된 주문자 없음' 출력

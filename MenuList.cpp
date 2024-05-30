@@ -37,7 +37,7 @@ void MenuList::changeMenu(string findMenuName) {
 			string name, introduce;
 
 			cin >> order;
-			cin.ignore();
+			cin.ignore(); // 05.30 modified
 
 			if (order == 1) {
 				cout << "-----변경할 이름 입력-----" << endl;

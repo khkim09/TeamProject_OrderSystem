@@ -74,4 +74,7 @@
     <Text Include="Menu_List.txt" />
     <Text Include="orders.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
 </Project>

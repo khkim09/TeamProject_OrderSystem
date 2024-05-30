@@ -161,7 +161,6 @@ int main() {
                 case '1': {
                     Customer customer = createCustomerFromInput();
                     customerList.addCustomer(customer);
-                    cout << "주문자 정보가 등록되었습니다." << endl << endl;
                     break;
                 }
                 case '2': {
