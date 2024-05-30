@@ -140,7 +140,7 @@ int main() {
                 }
                 case 'q': case 'Q': {
                     menulist.saveToFile("Menu_List.txt");
-                    cout << endl;
+                    cout << "+++메뉴 업데이트 완료+++" << endl << endl;
                     loop = false;
                     break;
                 }
@@ -230,8 +230,7 @@ int main() {
                 }
                 case 'q': case 'Q': {
                     customerList.saveToFile("Customers.txt");
-                    cout << "주문자 정보 업데이트 완료" << endl;
-                    cout << "프로그램 종료중..." << endl << endl;
+                    cout << "+++주문자 정보 업데이트 완료+++" << endl << endl;
                     loop = false;
                     break;
                 }
@@ -245,7 +244,6 @@ int main() {
             char choice;
 
             while (loop) {
-                cout << endl;
                 cout << "1. 주문 시작하기" << endl;
                 cout << "2. 주문 메뉴 변경 및 추가하기" << endl;
                 cout << "3. 주문 삭제하기" << endl;
